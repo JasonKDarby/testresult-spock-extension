@@ -10,8 +10,9 @@ import java.time.Instant
 
 class TestResultExtension : IGlobalExtension {
 
-    var tests = mutableListOf<Test>()
-    //I don't actually know if there's an appreciable difference in setting startTime here or in start()
+    var tests = emptyList<Test>()
+    //I don't actually know if there's an appreciable difference in setting startTime here or in start().
+    //Also, I don't really like initializing it like this.
     var startTime: Instant = Instant.EPOCH
 
     override fun start() {
@@ -19,8 +20,7 @@ class TestResultExtension : IGlobalExtension {
     }
 
     override fun visitSpec(spec: SpecInfo) {
-        val specInfoListener = SpecInfoListener { tests.add(it) }
-        spec.addListener(specInfoListener)
+        spec.addListener(SpecInfoListener { tests = tests.plus(it) })
     }
 
     override fun stop() {

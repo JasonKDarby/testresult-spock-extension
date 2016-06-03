@@ -1,0 +1,50 @@
+buildscript {
+  ext.kotlin_version = '1.0.2'
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+plugins {
+  id 'com.jfrog.bintray' version '1.6'
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'groovy'
+
+repositories {
+  jcenter()
+  maven { url "http://repository.jetbrains.com/all/" }
+  maven { url 'https://dl.bintray.com/jasonkdarby/generic' }
+}
+
+group 'com.jdarb.testresult'
+version '0.3'
+
+dependencies {
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  compile 'com.jdarb.testresult:model:0.4'
+  compile 'org.spockframework:spock-core:1.0-groovy-2.4'
+  testCompile 'org.codehaus.groovy:groovy:2.4.6'
+}
+
+bintray {
+  user = System.getenv 'BINTRAY_USER'
+  key = System.getenv 'BINTRAY_KEY'
+  configurations = ['archives']
+  pkg {
+    repo = 'generic'
+    name = project.name
+    userOrg = user
+    licenses = ['MIT']
+    vcsUrl = 'https://github.com/JasonKDarby/testresult-spock-extension'
+    version {
+      name = project.version
+      desc = "TestResult - Spock Extension ${project.version}"
+      attributes = [:]
+    }
+  }
+}

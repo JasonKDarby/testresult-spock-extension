@@ -18,7 +18,7 @@ class TestResultExtension : IGlobalExtension {
     }
 
     override fun visitSpec(spec: SpecInfo) {
-        spec.addListener(SpecInfoListener { tests = tests.plus(it) })
+        spec.addListener(SpecInfoListener { tests += it })
     }
 
     override fun stop() {

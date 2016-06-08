@@ -12,6 +12,8 @@ class TestResultExtension : IGlobalExtension {
 
     var tests = emptyList<Test>()
     lateinit var startTime: Instant
+    lateinit var resultFile: File
+        private set
 
     override fun start() {
         startTime = Instant.now()
@@ -38,11 +40,11 @@ class TestResultExtension : IGlobalExtension {
                 "testresultextension.output.filename",
                 "${run.id}_${Instant.now().toString()}.json"
         )
-        val file = File("$outputDirectory$outputFilename")
+        resultFile = File("$outputDirectory$outputFilename")
 
-        file.writeText(text = runAsJson)
+        resultFile.writeText(text = runAsJson)
 
-        println("Test result file written to ${file.absolutePath}")
+        println("Test result file written to ${resultFile.absolutePath}")
     }
 
 }

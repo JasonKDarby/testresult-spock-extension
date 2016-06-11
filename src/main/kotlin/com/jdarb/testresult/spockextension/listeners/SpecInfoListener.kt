@@ -112,8 +112,8 @@ internal fun BlockInfo.formattedString(): String =
 internal fun Test.copyWithErrorInfo(errorInfo: ErrorInfo?): Test =
         copy(
                 state = State.FAIL,
-                logMessages = logMessages
-                        + LogMessage(text = errorInfo?.toString() ?: "error could not be converted to string"))
+                logMessages =
+                logMessages + LogMessage(text = errorInfo?.toString() ?: "error could not be converted to string"))
 
 internal fun Test.getStateBasedOnChildren(): State =
         // If any child's state is FAIL then the parent's state is FAIL
